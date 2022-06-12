@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B12F58D285627CD008BC2C6 /* orientation-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B12F58C285627CD008BC2C6 /* orientation-extension.swift */; };
 		0BA9C5B2284A00FF00C05ABC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5B1284A00FF00C05ABC /* AppDelegate.swift */; };
 		0BA9C5B4284A00FF00C05ABC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5B3284A00FF00C05ABC /* SceneDelegate.swift */; };
 		0BA9C5B6284A00FF00C05ABC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5B5284A00FF00C05ABC /* ViewController.swift */; };
 		0BA9C5B9284A00FF00C05ABC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9C5B7284A00FF00C05ABC /* Main.storyboard */; };
 		0BA9C5BB284A010100C05ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9C5BA284A010100C05ABC /* Assets.xcassets */; };
 		0BA9C5BE284A010100C05ABC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA9C5BC284A010100C05ABC /* LaunchScreen.storyboard */; };
+		0BA9C5C6284A0EF200C05ABC /* imageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5C5284A0EF200C05ABC /* imageEditViewController.swift */; };
+		0BA9C5E8284DD72F00C05ABC /* imageRatioEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5E7284DD72F00C05ABC /* imageRatioEditViewController.swift */; };
+		0BA9C5EA284E1CDE00C05ABC /* imageFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5E9284E1CDE00C05ABC /* imageFilterViewController.swift */; };
+		0BA9C5EC284E600D00C05ABC /* imageAdjustViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA9C5EB284E600D00C05ABC /* imageAdjustViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B12F58C285627CD008BC2C6 /* orientation-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "orientation-extension.swift"; sourceTree = "<group>"; };
 		0BA9C5AE284A00FF00C05ABC /* ImageEditApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageEditApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BA9C5B1284A00FF00C05ABC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BA9C5B3284A00FF00C05ABC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +30,10 @@
 		0BA9C5BA284A010100C05ABC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BA9C5BD284A010100C05ABC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BA9C5BF284A010100C05ABC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BA9C5C5284A0EF200C05ABC /* imageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageEditViewController.swift; sourceTree = "<group>"; };
+		0BA9C5E7284DD72F00C05ABC /* imageRatioEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageRatioEditViewController.swift; sourceTree = "<group>"; };
+		0BA9C5E9284E1CDE00C05ABC /* imageFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageFilterViewController.swift; sourceTree = "<group>"; };
+		0BA9C5EB284E600D00C05ABC /* imageAdjustViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageAdjustViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +70,11 @@
 				0BA9C5B3284A00FF00C05ABC /* SceneDelegate.swift */,
 				0BA9C5B5284A00FF00C05ABC /* ViewController.swift */,
 				0BA9C5B7284A00FF00C05ABC /* Main.storyboard */,
+				0BA9C5EB284E600D00C05ABC /* imageAdjustViewController.swift */,
+				0BA9C5E9284E1CDE00C05ABC /* imageFilterViewController.swift */,
+				0B12F58C285627CD008BC2C6 /* orientation-extension.swift */,
+				0BA9C5E7284DD72F00C05ABC /* imageRatioEditViewController.swift */,
+				0BA9C5C5284A0EF200C05ABC /* imageEditViewController.swift */,
 				0BA9C5BA284A010100C05ABC /* Assets.xcassets */,
 				0BA9C5BC284A010100C05ABC /* LaunchScreen.storyboard */,
 				0BA9C5BF284A010100C05ABC /* Info.plist */,
@@ -138,7 +153,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BA9C5EC284E600D00C05ABC /* imageAdjustViewController.swift in Sources */,
+				0BA9C5EA284E1CDE00C05ABC /* imageFilterViewController.swift in Sources */,
+				0BA9C5C6284A0EF200C05ABC /* imageEditViewController.swift in Sources */,
 				0BA9C5B6284A00FF00C05ABC /* ViewController.swift in Sources */,
+				0B12F58D285627CD008BC2C6 /* orientation-extension.swift in Sources */,
+				0BA9C5E8284DD72F00C05ABC /* imageRatioEditViewController.swift in Sources */,
 				0BA9C5B2284A00FF00C05ABC /* AppDelegate.swift in Sources */,
 				0BA9C5B4284A00FF00C05ABC /* SceneDelegate.swift in Sources */,
 			);
@@ -290,6 +310,8 @@
 				DEVELOPMENT_TEAM = 6Y6W89FD4G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImageEditApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow App use your camera, you can take photo and edit it by using this App.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow to save image to the album.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -318,6 +340,8 @@
 				DEVELOPMENT_TEAM = 6Y6W89FD4G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ImageEditApp/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow App use your camera, you can take photo and edit it by using this App.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow to save image to the album.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
