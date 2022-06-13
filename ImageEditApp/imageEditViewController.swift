@@ -19,6 +19,7 @@ extension imageEditViewController: UIColorPickerViewControllerDelegate{
 class imageEditViewController: UIViewController{
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var mirrorView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     //selectItem儲存上一頁傳過來的圖片
     var selectItem = UIImage()
@@ -78,14 +79,14 @@ class imageEditViewController: UIViewController{
     
     //拖曳字的function
     @objc func moveFont(_ sender: UIPanGestureRecognizer){
-        let point = sender.location(in: self.imageView)
+        let point = sender.location(in: self.containerView)
         //設定中心點為拖曳點
         text.center = point
     }
     
     //拖曳貼圖的function
     @objc func moveSticker(_ sender: UIPanGestureRecognizer){
-        let point = sender.location(in: self.imageView)
+        let point = sender.location(in: self.containerView)
         //設定中心點為拖曳點
         sticker.center = point
     }
@@ -220,9 +221,9 @@ class imageEditViewController: UIViewController{
     
     @IBAction func mirrorRotate(_ sender: Any) {
         if mirrorNum % 2 == 1{
-            imageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+            mirrorView.transform = CGAffineTransform(scaleX: -1, y: 1)
         }else if mirrorNum % 2 == 0{
-            imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            mirrorView.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
         mirrorNum += 1
         
@@ -231,13 +232,21 @@ class imageEditViewController: UIViewController{
     
     
     @IBAction func turnLeft(_ sender: Any) {
-        if turnNum < 4{
-            imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * -1 * CGFloat(turnNum))
-        }else if turnNum == 4{
-            imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 0)
-            turnNum = 0
+        if mirrorNum % 2 == 1{
+            if turnNum < 4{
+                imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * -1 * CGFloat(turnNum))
+            }else if turnNum == 4{
+                imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 0)
+                turnNum = 0
+            }
+        }else if mirrorNum % 2 == 0{
+            if turnNum < 4{
+                imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 1 * CGFloat(turnNum))
+            }else if turnNum == 4{
+                imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 0)
+                turnNum = 0
+            }
         }
-        
         turnNum += 1
     }
     
@@ -342,7 +351,7 @@ class imageEditViewController: UIViewController{
 
         let renderer = UIGraphicsImageRenderer(bounds: CGRect(x: imageView.frame.minX + offsetX, y: imageView.frame.minY + offsetY, width: newWidth, height: newHeight))
         renderImage = renderer.image(actions: { (context) in
-              containerView.drawHierarchy(in: imageView.frame, afterScreenUpdates: true)
+              containerView.drawHierarchy(in: imageView.bounds, afterScreenUpdates: true)
         })
         
         let activityViewController = UIActivityViewController(activityItems: [renderImage], applicationActivities: nil)

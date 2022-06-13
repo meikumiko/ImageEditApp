@@ -447,17 +447,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xp4-DC-g0i">
                                 <rect key="frame" x="0.0" y="135" width="375" height="401"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Qa-KA-jQH">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qtZ-9c-Vjp">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
-                                    </imageView>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Qa-KA-jQH">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="8Qa-KA-jQH" firstAttribute="top" secondItem="xp4-DC-g0i" secondAttribute="top" id="5o2-ED-xha"/>
-                                    <constraint firstItem="8Qa-KA-jQH" firstAttribute="leading" secondItem="xp4-DC-g0i" secondAttribute="leading" id="D8U-NX-AGL"/>
-                                    <constraint firstAttribute="trailing" secondItem="8Qa-KA-jQH" secondAttribute="trailing" id="XyE-0L-LSp"/>
-                                    <constraint firstAttribute="bottom" secondItem="8Qa-KA-jQH" secondAttribute="bottom" id="jHr-Pc-zdY"/>
-                                </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wj7-oY-fyz" userLabel="Menu Stack View">
                                 <rect key="frame" x="0.0" y="726" width="375" height="86"/>
@@ -605,8 +607,11 @@
                                     <action selector="returnPage:" destination="V9k-Ii-9AQ" eventType="touchUpInside" id="ZvC-CS-Bol"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgr-y6-gtM">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgr-y6-gtM">
                                 <rect key="frame" x="8" y="92" width="77" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rgr-y6-gtM" secondAttribute="height" multiplier="11:5" id="z37-nO-zsm"/>
+                                </constraints>
                                 <color key="tintColor" red="0.68627450980000004" green="0.54901960780000003" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Reset">
@@ -689,6 +694,7 @@
                         <outlet property="fontSizeButton" destination="ukz-lJ-vi2" id="9gW-7Q-hXk"/>
                         <outlet property="fontSizeSlider" destination="r6Q-D7-N87" id="U8O-gd-2f4"/>
                         <outlet property="imageView" destination="8Qa-KA-jQH" id="oiz-1g-ejv"/>
+                        <outlet property="mirrorView" destination="qtZ-9c-Vjp" id="Uis-4R-9XQ"/>
                         <outlet property="ratioEditButton" destination="mLW-iQ-je4" id="oPw-qx-XXU"/>
                         <outlet property="resetButton" destination="rgr-y6-gtM" id="oAw-Cs-3pG"/>
                         <outlet property="selectStickerView" destination="DzI-zr-gNO" id="Zwg-sh-vMO"/>
@@ -1100,31 +1106,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="rfT-BN-BoO" userLabel="Rotation Stack View">
-                                <rect key="frame" x="20" y="90" width="75" height="32"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIm-Po-ZIn">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="32"/>
-                                        <color key="tintColor" red="0.68627450980000004" green="0.54901960780000003" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background" image="arrow.left.and.right.righttriangle.left.righttriangle.right.fill" catalog="system"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1UC-pH-bwD">
-                                        <rect key="frame" x="45" y="0.0" width="30" height="32"/>
-                                        <color key="tintColor" red="0.68627450980000004" green="0.54901960780000003" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain">
-                                            <backgroundConfiguration key="background" image="rotate.left.fill" catalog="system"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="5Rm-yG-6O2"/>
-                                    <constraint firstAttribute="height" constant="32" id="XfT-DB-YDM"/>
-                                </constraints>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XnT-8n-pU5">
                                 <rect key="frame" x="0.0" y="135" width="375" height="400"/>
                                 <subviews>
@@ -1372,7 +1353,10 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4v-az-o1c">
-                                <rect key="frame" x="297" y="92" width="67" height="35"/>
+                                <rect key="frame" x="290" y="92" width="74" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="G4v-az-o1c" secondAttribute="height" multiplier="74:35" id="fTk-LT-fqw"/>
+                                </constraints>
                                 <color key="tintColor" red="0.40839508330000002" green="0.3323566899" blue="0.2811499972" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done">
@@ -1389,15 +1373,13 @@
                             <constraint firstItem="XnT-8n-pU5" firstAttribute="trailing" secondItem="yx8-UH-Wrq" secondAttribute="trailing" id="8Di-Ai-EqY"/>
                             <constraint firstItem="yx8-UH-Wrq" firstAttribute="trailing" secondItem="G4v-az-o1c" secondAttribute="trailing" constant="11" id="Mis-lr-0ib"/>
                             <constraint firstItem="XnT-8n-pU5" firstAttribute="top" secondItem="G4v-az-o1c" secondAttribute="bottom" constant="8" id="NUR-Hs-iXr"/>
-                            <constraint firstItem="rfT-BN-BoO" firstAttribute="leading" secondItem="yx8-UH-Wrq" secondAttribute="leading" constant="20" id="PUq-9c-Dxn"/>
                             <constraint firstItem="XnT-8n-pU5" firstAttribute="leading" secondItem="yx8-UH-Wrq" secondAttribute="leading" id="QdC-Ga-qcv"/>
                             <constraint firstItem="hsk-Ef-jsV" firstAttribute="top" secondItem="XnT-8n-pU5" secondAttribute="bottom" constant="38" id="TUn-dg-ELP"/>
-                            <constraint firstItem="rfT-BN-BoO" firstAttribute="top" secondItem="yx8-UH-Wrq" secondAttribute="top" constant="46" id="V6y-mK-bkn"/>
                             <constraint firstItem="hsk-Ef-jsV" firstAttribute="trailing" secondItem="yx8-UH-Wrq" secondAttribute="trailing" id="ceV-15-x5H"/>
                             <constraint firstItem="G4v-az-o1c" firstAttribute="top" secondItem="yx8-UH-Wrq" secondAttribute="top" constant="48" id="hBd-Zx-0b4"/>
                             <constraint firstItem="hsk-Ef-jsV" firstAttribute="top" secondItem="yx8-UH-Wrq" secondAttribute="top" constant="529" id="vPt-2x-y75"/>
                             <constraint firstItem="hsk-Ef-jsV" firstAttribute="leading" secondItem="yx8-UH-Wrq" secondAttribute="leading" id="w9Q-IC-VVO"/>
-                            <constraint firstItem="G4v-az-o1c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rfT-BN-BoO" secondAttribute="trailing" constant="201" id="xiG-7H-0ox"/>
+                            <constraint firstItem="G4v-az-o1c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yx8-UH-Wrq" secondAttribute="leading" constant="290" id="xTo-60-R5L"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1407,7 +1389,6 @@
                         <outlet property="landscapeButton" destination="egR-3t-MZS" id="3bB-v9-SYF"/>
                         <outlet property="orientationStackView" destination="8zZ-Dh-KFu" id="lVf-yI-Gf8"/>
                         <outlet property="portraitButton" destination="vh8-7H-1en" id="CmE-IO-tcc"/>
-                        <outlet property="rotationStackView" destination="rfT-BN-BoO" id="Qcn-gs-yKd"/>
                         <outletCollection property="ratioButtons" destination="CVa-wD-OJd" collectionClass="NSMutableArray" id="afb-PX-8Gv"/>
                         <outletCollection property="ratioButtons" destination="pAz-ME-Kyg" collectionClass="NSMutableArray" id="HDd-Bi-dct"/>
                         <outletCollection property="ratioButtons" destination="wuX-29-UUP" collectionClass="NSMutableArray" id="gew-A1-OGR"/>
@@ -1421,7 +1402,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0U3-fT-QA4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="O5X-LF-yZb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1838" y="850"/>
+            <point key="canvasLocation" x="1837.5999999999999" y="849.7536945812808"/>
         </scene>
     </scenes>
     <resources>
