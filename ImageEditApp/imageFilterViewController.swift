@@ -105,10 +105,6 @@ class imageFilterViewController: UIViewController{
 
     //返回上一頁時先執行的動作，輸出套用完濾鏡的圖片
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //let renderer = UIGraphicsImageRenderer(size: containerView.bounds.size)
-        //renderImage = renderer.image(actions: { (context) in
-         //     containerView.drawHierarchy(in: containerView.bounds, afterScreenUpdates: true)
-        //   })
         renderImage = imageView.image!
     }
 

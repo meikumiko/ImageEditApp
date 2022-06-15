@@ -10,7 +10,8 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 extension imageEditViewController: UIColorPickerViewControllerDelegate{
-    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        //讓文字顏色等於所選擇的顏色
         text.textColor = viewController.selectedColor
     }
 }
@@ -64,10 +65,14 @@ class imageEditViewController: UIViewController{
     @IBOutlet weak var addStickerButton: UIButton!
     @IBOutlet weak var adjustFontView: UIView!
     @IBOutlet weak var selectStickerView: UIView!
+    
+    //儲存文字跟貼圖的property
     var text = UITextField()
     var sticker = UIImageView()
     
+    //儲存圖片水平旋轉狀態的property
     var mirrorNum = 1
+    //儲存圖片向左旋轉次數的property
     var turnNum = 1
     
     //重設圖片的button
@@ -79,6 +84,7 @@ class imageEditViewController: UIViewController{
     
     //拖曳字的function
     @objc func moveFont(_ sender: UIPanGestureRecognizer){
+        //宣告property儲存手拖曳時在containerView裡的位置點
         let point = sender.location(in: self.containerView)
         //設定中心點為拖曳點
         text.center = point
@@ -86,6 +92,7 @@ class imageEditViewController: UIViewController{
     
     //拖曳貼圖的function
     @objc func moveSticker(_ sender: UIPanGestureRecognizer){
+        //宣告property儲存手拖曳時在containerView裡的位置點
         let point = sender.location(in: self.containerView)
         //設定中心點為拖曳點
         sticker.center = point
@@ -93,14 +100,16 @@ class imageEditViewController: UIViewController{
     
     //縮放貼圖的function
     @objc func pinchSticker(_ sender: UIPinchGestureRecognizer){
+        //當兩根手指的捏合狀態改變時
         if sender.state == .changed{
+            //宣告property儲存縮放範圍
             let scale = sender.scale
-            let w = sticker.frame.size.width
+            //宣告property儲存原本貼圖的外框bounds的寬度
+            let w = sticker.bounds.size.width
             
-            
-            
-            //設定縮放範圍0.4~1倍
+            //讓縮放範圍為貼圖的寬為原本的寬的0.3~2倍
             if w * scale > w * 0.3 && w * scale <= w * 2{
+                //等比例縮放貼圖
                 sticker.transform = CGAffineTransform(scaleX: scale, y: scale)
             }
         }
@@ -140,8 +149,9 @@ class imageEditViewController: UIViewController{
         //設定單點觸控拖曳
         panFontGestureRecognizer.minimumNumberOfTouches = 1
         panFontGestureRecognizer.maximumNumberOfTouches = 1
-        //UIView要開啟isUserInteractionEnabled，觸控才有反應
+        //text field要開啟isUserInteractionEnabled，觸控才有反應
         text.isUserInteractionEnabled = true
+        //將拖曳手勢加到text field上
         text.addGestureRecognizer(panFontGestureRecognizer)
         
         //設定拖曳手勢，用在移動貼圖
@@ -152,12 +162,11 @@ class imageEditViewController: UIViewController{
         sticker.isUserInteractionEnabled = true
         sticker.addGestureRecognizer(panStickerGestureRecognizer)
         
-        //設定縮放手勢，用在縮放貼圖
+        //設定捏合手勢，用在縮放貼圖
         let pinchStickerGestureRecognzier = UIPinchGestureRecognizer(target: self, action: #selector(pinchSticker(_:)))
+        //將捏合手勢加入貼圖中
         sticker.addGestureRecognizer(pinchStickerGestureRecognzier)
 
-        
-        
     }
     
     @IBAction func addFont(_ sender: Any) {
@@ -166,17 +175,19 @@ class imageEditViewController: UIViewController{
         fontColorButton.isSelected = false
         fontSizeSlider.isHidden = false
         selectStickerView.isHidden = true
-        
+        //先判斷containerView中是否有文字，沒有的話才加入文字，有的話就不執行動作
         if containerView.subviews.contains(text) == false{
-            text.placeholder = "輸入文字"
-            text.borderStyle = .none
-            text.textAlignment = .center
-            text.font = UIFont.systemFont(ofSize: 20)
-            text.textColor = .black
-            text.frame.size = CGSize(width: 200, height: 100)
-            text.allowsEditingTextAttributes = true
-            text.center = imageView.center
+            //設定text field的相關屬性
+            text.placeholder = "輸入文字" //提示字
+            text.borderStyle = .none //外框風格
+            text.textAlignment = .center //文字對齊方式
+            text.font = UIFont.systemFont(ofSize: 20) //文字預設大小
+            text.textColor = .black //文字顏色
+            text.frame.size = CGSize(width: 200, height: 100) //text field外框大小
+            text.allowsEditingTextAttributes = true //設定可編輯文字屬性（選取字之後會顯示可執行的動作）
+            text.center = imageView.center //讓文字出現在image view的中間
             
+            //加入text field到containerView中
             containerView.addSubview(text)
         }
         
@@ -211,36 +222,51 @@ class imageEditViewController: UIViewController{
     }
     
     @IBAction func AddSticker(_ sender: UIButton){
-        sticker.contentMode = .scaleAspectFit
+        //設定貼圖的外框大小
         sticker.frame.size = CGSize(width: 100, height: 100)
+        //圖片的顯示模式為AspectFit，才能完整顯示而且不改變圖片原本比例
+        sticker.contentMode = .scaleAspectFit
+        //讓圖片出現在imageView中間
         sticker.center = imageView.center
+        //顯示的貼圖為點選的按鈕所對應的圖片名稱
         sticker.image = UIImage(named: "sticker-" + "\(sender.tag)")
+        //把貼圖加到containerView中
         containerView.addSubview(sticker)
     }
     
-    
+    //水平翻轉
     @IBAction func mirrorRotate(_ sender: Any) {
+        //mirrorNum除2餘1的時候，表示圖片未水平翻轉過，做水平翻轉
         if mirrorNum % 2 == 1{
             mirrorView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        //mirrorNum除2餘0的時候，表示圖片已經翻轉過，轉回圖片原本的方向
         }else if mirrorNum % 2 == 0{
             mirrorView.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
+        //每做完一次翻轉mirrorNum就+1，以判斷圖片現在的狀態
         mirrorNum += 1
         
     }
     
     
-    
+    //向左旋轉90度
     @IBAction func turnLeft(_ sender: Any) {
+        //mirrorNum除2餘1，表示照片沒有水平翻轉過，仍是原本的方向
         if mirrorNum % 2 == 1{
+            //判斷照片旋轉幾次，轉3次會回到原本方向，所以turnNum等於1~3的時候，要向左旋轉
             if turnNum < 4{
+                //旋轉角度乘以-1代表逆時針旋轉
                 imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * -1 * CGFloat(turnNum))
+            //turnNum等於4表示要轉回原本方向了，讓旋轉值值歸0
             }else if turnNum == 4{
                 imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 0)
+                //讓turnNum等於0是因為最後會再+1，才會回到初始值
                 turnNum = 0
             }
+        //mirrorNum除2餘0，表示照片水平翻轉過，旋轉方向需改變
         }else if mirrorNum % 2 == 0{
             if turnNum < 4{
+                //以照片視角來說，x軸顛倒，所以向右轉才是左轉
                 imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 1 * CGFloat(turnNum))
             }else if turnNum == 4{
                 imageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2 * 0)
