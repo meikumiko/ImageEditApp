@@ -17,6 +17,7 @@ extension imageEditViewController: UIColorPickerViewControllerDelegate{
 }
 
 
+
 class imageEditViewController: UIViewController{
     
     @IBOutlet weak var containerView: UIView!
@@ -366,8 +367,8 @@ class imageEditViewController: UIViewController{
         editedImage = imageView.image!
         let imgW = editedImage.size.width
         let imgH = editedImage.size.height
-        let viewW = imageView.bounds.width
-        let viewH = imageView.bounds.height
+        let viewW = imageView.frame.width
+        let viewH = imageView.frame.height
         let scale = min(viewW / imgW, viewH / imgH)
         let newWidth = imgW * scale
         let newHeight = imgH * scale

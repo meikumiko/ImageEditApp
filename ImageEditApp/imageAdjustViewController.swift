@@ -40,6 +40,7 @@ class imageAdjustViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = editedImage
+        print(CIFilter(name: "CIColorControls")?.attributes ?? "")
 
         // Do any additional setup after loading the view.
     }
@@ -50,7 +51,7 @@ class imageAdjustViewController: UIViewController {
         let ciImage = CIImage(image: editedImage)
         //使用CIColorControls filter，裡面才有調整亮度、對比、飽和度的功能
         let filter = CIFilter(name: "CIColorControls")
-        //把CIImage放入filter中
+        //指定ciImage為輸入filter的對象
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
         //設定3個slider個別對應的功能
         filter?.setValue(adjustSliders[0].value, forKey: kCIInputBrightnessKey)

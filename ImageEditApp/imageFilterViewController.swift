@@ -49,7 +49,7 @@ class imageFilterViewController: UIViewController{
             let ciImage = CIImage(image: (filterButton[i].configuration?.background.image)!)
             //設定濾鏡
             if let filter = CIFilter(name: filterArray[i]){
-                //把圖片放入filter中
+                //指定ciImage為輸入filter的對象
                 filter.setValue(ciImage, forKey: kCIInputImageKey)
                 //輸出套用濾鏡後的圖片，格式為CIImage
                 if let outputImage = filter.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
@@ -85,7 +85,7 @@ class imageFilterViewController: UIViewController{
         }else if sender.tag >= 1{
             //判斷使用的濾鏡是哪一個
             if let filter = CIFilter(name: filterArray[sender.tag]){
-                //把圖片放入filter
+                //指定ciImage為輸入filter的對象
                 filter.setValue(ciImage, forKey: kCIInputImageKey)
                 //輸出套用濾鏡後的圖片，格式為CIImage
                 if let outputImage = filter.outputImage, let cgImage = context.createCGImage(outputImage, from: outputImage.extent){

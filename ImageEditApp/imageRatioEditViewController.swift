@@ -32,8 +32,7 @@ class imageRatioEditViewController: UIViewController {
     //cropFrame用來裝裁切框線的layer，以及作為截圖範圍
     var cropFrame = UIView()
     
-    //調整圖片方向、尺寸需要的property
-    @IBOutlet weak var rotationStackView: UIStackView!
+    //調整圖片方向、尺寸需要的property!
     @IBOutlet weak var orientationStackView: UIStackView!
     @IBOutlet weak var portraitButton: UIButton!{
         didSet{
@@ -70,7 +69,7 @@ class imageRatioEditViewController: UIViewController {
 
     
     override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
+        super.viewDidAppear(animated)
             updateZoomSizeFor(size: containerView.bounds.size)
     }
     
@@ -115,8 +114,7 @@ class imageRatioEditViewController: UIViewController {
         if cropFrame.frame.origin.y > overY{
             cropFrame.frame.origin.y = overY
         }
-        
-        print("frame",cropFrame.frame,   cropFrame.frame.minX, cropFrame.frame.minY, "bounds", cropFrame.bounds, cropFrame.bounds.minX, cropFrame.bounds.minY)
+     
         
     }
     
@@ -141,6 +139,14 @@ class imageRatioEditViewController: UIViewController {
         imageView.image = editedImage
         portraitButton.isSelected = false
         landscapeButton.isSelected = true
+        
+        //將畫好的外框線、內框線跟四個角放到比例框線view中
+        cropFrame.layer.addSublayer(drawRect())
+        cropFrame.layer.addSublayer(drawLine())
+        cropFrame.layer.addSublayer(drawCorner())
+        //把比例框線view加到containerView中
+        containerView.addSubview(cropFrame)
+        
         //宣告圖片寬、高的property
         let imgW = editedImage.size.width
         let imgH = editedImage.size.height
@@ -155,14 +161,7 @@ class imageRatioEditViewController: UIViewController {
         //讓比例框線view的寬跟高 = 圖片縮放後的寬跟高
         cropFrame.frame.size.width = scaledImgW
         cropFrame.frame.size.height = scaledImgH
-        
-        //將畫好的外框線、內框線跟四個角放到比例框線view中
-        cropFrame.layer.addSublayer(drawRect())
-        cropFrame.layer.addSublayer(drawLine())
-        cropFrame.layer.addSublayer(drawCorner())
-        //把比例框線view加到containerView中
-        containerView.addSubview(cropFrame)
-        
+
         //設定拖曳手勢，用在移動比例框線
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(move(_:)))
         //設定單點觸控拖曳
@@ -190,8 +189,8 @@ class imageRatioEditViewController: UIViewController {
         let scale = min(viewW / imgW, viewH / imgH)
         let scaledImgW = imgW * scale
         let scaledImgH = imgH * scale
-        let offsetX = (viewW - imgW * scale) / 2
-        let offsetY = (viewH - imgH * scale) / 2
+        let offsetX = (viewW - scaledImgW) / 2
+        let offsetY = (viewH - scaledImgH) / 2
         
         
         let path = UIBezierPath(rect: CGRect(x: offsetX, y: offsetY, width: scaledImgW, height: scaledImgH))
@@ -213,8 +212,8 @@ class imageRatioEditViewController: UIViewController {
         let scale = min(viewW / imgW, viewH / imgH)
         let scaledImgW = imgW * scale
         let scaledImgH = imgH * scale
-        let offsetX = (viewW - imgW * scale) / 2
-        let offsetY = (viewH - imgH * scale) / 2
+        let offsetX = (viewW - scaledImgW) / 2
+        let offsetY = (viewH - scaledImgH) / 2
         
         let line = UIBezierPath()
         line.move(to: CGPoint(x: offsetX + scaledImgW / 3, y: offsetY))
@@ -242,8 +241,8 @@ class imageRatioEditViewController: UIViewController {
         let scale = min(viewW / imgW, viewH / imgH)
         let scaledImgW = imgW * scale
         let scaledImgH = imgH * scale
-        let offsetX = (viewW - imgW * scale) / 2
-        let offsetY = (viewH - imgH * scale) / 2
+        let offsetX = (viewW - scaledImgW) / 2
+        let offsetY = (viewH - scaledImgH) / 2
         
         let corner = UIBezierPath()
         //左上角
@@ -300,10 +299,11 @@ class imageRatioEditViewController: UIViewController {
         let viewW = imageScrollView.bounds.width
         let viewH = imageScrollView.bounds.height
         let scale = min(viewW / imgW, viewH / imgH)
-        let originalWidth = imgW * scale
-        let originalHeight = imgH * scale
-        let ratioValue = min(originalWidth, originalHeight)
+        let scaledWidth = imgW * scale
+        let scaledHeight = imgH * scale
+        let ratioValue = min(scaledWidth, scaledHeight)
         
+        //選擇正方形時，無法選擇直向或橫向
         if sender.tag == 1{
             portraitButton.isEnabled = false
             landscapeButton.isEnabled = false
@@ -312,64 +312,66 @@ class imageRatioEditViewController: UIViewController {
             landscapeButton.isEnabled = true
         }
         
+        //如果選擇橫向的尺寸框，以寬度作為基準，更改高度比例
         if num == 0{
             switch sender.tag{
             case 0:
                 cropFrame.transform = CGAffineTransform(scaleX: 1, y: 1)
                 landscapeButton.isSelected = true
             case 1:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = false
                 landscapeButton.isSelected = false
             case 2:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 9 / 16)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 9 / 16)
                 landscapeButton.isSelected = true
             case 3:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 4 / 5)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 4 / 5)
                 landscapeButton.isSelected = true
             case 4:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 5 / 7)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 5 / 7)
                 landscapeButton.isSelected = true
             case 5:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 3 / 4)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 3 / 4)
                 landscapeButton.isSelected = true
             case 6:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 3 / 5)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 3 / 5)
                 landscapeButton.isSelected = true
             case 7:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight * 2 / 3)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight * 2 / 3)
                 landscapeButton.isSelected = true
                 
             default:
                 break
             }
             
+        //如果選擇直向的尺寸框，以高度作為基準，更改寬度比例
         }else if num == 1{
             switch sender.tag{
             case 0:
                 cropFrame.transform = CGAffineTransform(scaleX: 1, y: 1)
                 portraitButton.isSelected = true
             case 1:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = false
                 landscapeButton.isSelected = false
             case 2:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 9 / 16, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 9 / 16, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             case 3:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 4 / 5, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 4 / 5, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             case 4:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 5 / 7, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 5 / 7, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             case 5:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 3 / 4, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 3 / 4, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             case 6:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 3 / 5, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 3 / 5, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             case 7:
-                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / originalWidth * 2 / 3, y: ratioValue / originalHeight)
+                cropFrame.transform = CGAffineTransform(scaleX: ratioValue / scaledWidth * 2 / 3, y: ratioValue / scaledHeight)
                 portraitButton.isSelected = true
             default:
                 break
@@ -381,7 +383,7 @@ class imageRatioEditViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        //移除裁切框
         cropFrame.removeFromSuperview()
         
         
